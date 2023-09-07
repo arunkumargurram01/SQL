@@ -1,0 +1,48 @@
+MySql Pass : @MysqlPass#123
+
+Password changed due to connect Node with Mysql DB as
+
+Pass : root123
+
+using following code
+
+ALTER USER 'root'@'localhost' identified with 
+mysql_native_password by 'root123';
+
+
+HOW TON CONNECT WITH MYSQL IN NODE : 
+//MYsql DataBase Connection and Run Queryies
+const {createPool} = require('mysql')
+
+//Mysql database connection module using "createpool" that is used to do parrallel database queries
+
+const pool = createPool({
+    host : "localhost",
+    user : "root",
+    password : "root123", // We changed the original password to connect with db.
+    database:'company',
+    connectionLimit: 10,
+
+})
+
+
+//Inserting Data into DB
+q1 = "INSERT INTO employee(emp_id, emp_name, emp_role) VALUES (?,?,?)";
+pool.query(q1,[6, 'Ganesh', 'Frontend Developer'], (err, res) => {
+    if(err){
+        return console.log('DATABASE ERR : '+err);
+    }
+    return console.log("Data Inserted Successfully");
+})
+
+
+
+//Retriving Data from DB
+pool.query('SELECT * FROM employee ', (err, res, fields) => {
+    if(err){
+        return console.log('DATABASE ERR : '+err);
+    }
+    return console.log(res);
+
+})
+
